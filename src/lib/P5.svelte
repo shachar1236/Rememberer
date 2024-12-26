@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount, createEventDispatcher } from 'svelte';
 	import type p5 from 'p5';
-	import type { Sketch } from '$lib/types';
+	import type { Sketch } from './types';
 
 	// Component props
 	export let target: HTMLElement = undefined;
