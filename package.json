@@ -17,6 +17,11 @@
     "vite": "^6.0.5"
   },
   "dependencies": {
-    "p5-svelte": "^3.1.2"
+    "audio5js": "^0.1.1",
+    "buzz": "^1.2.1",
+    "howler": "^2.2.4",
+    "p5": "^1.11.2",
+    "p5-svelte": "^3.1.2",
+    "pizzicato": "^0.6.4"
   }
 }

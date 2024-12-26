@@ -1,8 +1,11 @@
-<script>
+<script lang="ts">
 	import P5 from "../lib/P5.svelte";
+    import type p5 from 'p5';
     import { shuffle, randomInt, randomFloat } from "../helpers/functions.js"
     import { QuestionPool } from "../helpers/questions_pool";
     import { max_score, Question } from "../helpers/question";
+    import buzz from "buzz";
+    import { Howl } from "howler";
     export let question_set;
 
     const QUESTIONS_NUMBER = 4;
@@ -92,23 +95,41 @@
 
     let middleX, middleY;
 
+    var sound_correct = new Howl({
+    src: ['./assets/sounds/correct_v2.mp3']
+    });
+    var sound_wrong = new Howl({
+    src: ['./assets/sounds/wrong_v2.mp3']
+    });
 
-    const sketch = (p5) => {
+    if (question_set.config.music) {
+        var song = new Howl({
+        src: ['./assets/sounds/song.wav'],
+        loop: true,
+        autoplay: true,
+        volume: 0.1,
+        });
+    
+        song.play();
+    }
 
-            p5.choosen_answer = null;
-            p5.choosen_answer_last_time = 0;
-            p5.isCorrectAnswer = false;
-            p5.answer_image = null;
-            p5.answer_image_pos = {
+    const sketch = (p5: p5) => {
+
+            let choosen_answer = null;
+            let choosen_answer_last_time = 0;
+            let isCorrectAnswer = false;
+            let answer_image = null;
+            let answer_image_pos = {
                 x: p5.windowWidth / 2,
                 y: p5.windowHeight * 2,
             };
+            let answer_image_timer = 0;
 
-            p5.processAnswers = () => {
+            let processAnswers = () => {
                 for (let i = 0; i < QUESTIONS_NUMBER; i++) {
                     let x_diff = current_answers[i].target_x - current_answers[i].x;
                     let y_diff = current_answers[i].target_y - current_answers[i].y;
-                    if (!p5.choosen_answer) {
+                    if (!choosen_answer) {
                         if (Math.abs(x_diff) < MOV_RATE && Math.abs(y_diff) < MOV_RATE) {
                             // console.log("Changing target")
                             current_answers[i].target_x *= randomFloat(1 - RAND_RATE, 1 + RAND_RATE);
@@ -133,8 +154,8 @@
 
                     p5.textSize(ANSWER_TEXT_SIZE);
                     p5.textAlign(p5.CENTER);
-                    let time_since = Date.now() - p5.choosen_answer_last_time;
-                    if (p5.choosen_answer && current_answers[i].answer == current_question.answer && time_since % WRONG_ANSWER_FLICKERING_TIME < WRONG_ANSWER_FLICKERING_TIME / 2) {
+                    let time_since = Date.now() - choosen_answer_last_time;
+                    if (choosen_answer && current_answers[i].answer == current_question.answer && time_since % WRONG_ANSWER_FLICKERING_TIME < WRONG_ANSWER_FLICKERING_TIME / 2) {
                         p5.fill(23, 190, 187);
                     } else {
                         p5.fill(118, 176, 65);
@@ -143,37 +164,39 @@
 
 
                     let curr_ans = current_answers[i];
-                    if (!p5.choosen_answer) {
+                    if (!choosen_answer) {
                         // check if colides with question
                         if (p5.dist(curr_ans.x, curr_ans.y, current_question_pos.x, current_question_pos.y) < BOX_SIZE) {
                             console.log("Colides")
-                            p5.choosen_answer = curr_ans.answer;
-                            if (p5.choosen_answer == current_question.answer) {
-                                p5.isCorrectAnswer = true;
-                                p5.answer_image = p5.loadImage("https://static.vecteezy.com/system/resources/previews/017/177/781/original/green-tick-check-mark-on-transparent-background-free-png.png")
+                            choosen_answer = curr_ans.answer;
+                            if (choosen_answer == current_question.answer) {
+                                sound_correct.play();
+                                isCorrectAnswer = true;
+                                answer_image = p5.loadImage("./assets/images/tick.png")
                             } else {
-                                p5.choosen_answer_last_time = Date.now();
-                                p5.answer_image = p5.loadImage("https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Red_X.svg/1024px-Red_X.svg.png")
+                                sound_wrong.play()
+                                choosen_answer_last_time = Date.now();
+                                answer_image = p5.loadImage("./assets/images/Red_X.png")
                             }
                         }
                     }
                 }
             }
 
-            p5.setupNextRound = () => {
+            let setupNextRound = () => {
                 setNewQuestion();
                 current_question_pos = {
                     x: middleX,
                     y: middleY,
                 };
-                p5.choosen_answer = null;
-                p5.answer_image_timer = ANSWER_IMAGE_TIME;
-                p5.answer_image_pos = {
+                choosen_answer = null;
+                answer_image_timer = ANSWER_IMAGE_TIME;
+                answer_image_pos = {
                     x: p5.windowWidth / 2,
                     y: p5.windowHeight * 2,
                 };
-                p5.isCorrectAnswer = false;
-                p5.choosen_answer_last_time = 0;
+                isCorrectAnswer = false;
+                choosen_answer_last_time = 0;
             }
  
             p5.setup = () => {
@@ -190,29 +213,29 @@
                         })
                     }
                 }
-                p5.setupNextRound();
+                setupNextRound();
             };
 
             p5.draw = () => {
                 p5.background(46, 40, 42);
-                if (p5.choosen_answer) {
+                if (choosen_answer) {
                     p5.imageMode(p5.CENTER);
-                    p5.image(p5.answer_image, p5.answer_image_pos.x, p5.answer_image_pos.y, p5.windowWidth * ANSWER_IMAGE_WINDOWS_RATIO, p5.windowWidth * ANSWER_IMAGE_WINDOWS_RATIO)
-                    if (p5.answer_image_pos.y > middleY) {
-                        p5.answer_image_pos.y -= ANSWER_IMAGE_SPEED;
-                        p5.answer_image_timer = Date.now()
+                    p5.image(answer_image, answer_image_pos.x, answer_image_pos.y, p5.windowWidth * ANSWER_IMAGE_WINDOWS_RATIO, p5.windowWidth * ANSWER_IMAGE_WINDOWS_RATIO)
+                    if (answer_image_pos.y > middleY) {
+                        answer_image_pos.y -= ANSWER_IMAGE_SPEED;
+                        answer_image_timer = Date.now()
                     } else {
-                        if (Date.now() - p5.answer_image_timer > ANSWER_IMAGE_TIME * 1000) {
-                            if (p5.isCorrectAnswer) {
+                        if (Date.now() - answer_image_timer > ANSWER_IMAGE_TIME * 1000) {
+                            if (isCorrectAnswer) {
                                 current_question.AddScore(question_set.config.learning_rate);
                             } else {
                                 current_question.RemoveScore(question_set.config.learning_rate);
                             }
-                            p5.setupNextRound();
+                            setupNextRound();
                         }
                     }
                 } 
-                p5.processAnswers();
+                processAnswers();
                 p5.textSize(QUESTION_TEXT_SIZE);
                 p5.fill(255, 201, 20);
                 p5.textAlign(p5.CENTER);
@@ -232,7 +255,7 @@
     console.log("Here")
 </script>
 
-<P5 {sketch} />
+<P5 {sketch} debug />
 
 <style>
 </style>
