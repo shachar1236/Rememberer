@@ -20,6 +20,11 @@ export class QuestionPool {
         return score / this.questions.length;
     }
 
+    /**
+     * Gets a random question from the pool. The probability of each question to be picked
+     * is proportional to how much the question is not known (i.e. how low the score is).
+     * @return {Question} The randomly selected question.
+     */
     GetRandomQuestion() {
         console.log("In GetRandomQuestion");
         let score = 0;
