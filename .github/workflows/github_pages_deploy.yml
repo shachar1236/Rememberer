@@ -21,3 +21,9 @@ jobs:
           run: npm ci
         - name: Build html
           run: npm run build
+        - name: Stage changes
+          run: git add -A
+        - name: Commit changes
+          run: git commit -m "Built to html ${{ github.sha }}"
+        - name: Push changes
+          run: git push
