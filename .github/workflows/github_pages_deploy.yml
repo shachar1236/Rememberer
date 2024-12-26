@@ -19,15 +19,17 @@ jobs:
             node-version: 22
         - name: NPM clean install
           run: npm ci
+        - name: Set git origin
+          run: |
+            git config --global user.name 'Release runner'
+            git config --global user.email 'release_runner@users.noreply.github.com'
+            git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
         - name: Switch branch
           run: git switch release
         - name: Build html
           run: npm run build
         - name: Commit changes
           run: |
-            git config --global user.name 'Release runner'
-            git config --global user.email 'release_runner@users.noreply.github.com'
-            git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
             git add -A
             git commit -m "Built to html ${{ github.sha }}"
         - name: Push changes
