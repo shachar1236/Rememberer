@@ -23,7 +23,7 @@ jobs:
           run: |
             git config --global user.name 'Release runner'
             git config --global user.email 'release_runner@users.noreply.github.com'
-            git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+            git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }}
         - name: Get branches
           run: git branch -a
         - name: Switch branch
