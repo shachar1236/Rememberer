@@ -7,6 +7,8 @@ on:
 jobs:
   Deploy-Github-Pages:
       runs-on: ubuntu-latest
+      permissions:
+        contents: write
       steps:
         - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
         - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
@@ -26,6 +28,7 @@ jobs:
           run: |
             git config --global user.name 'Release runner'
             git config --global user.email 'release_runner@users.noreply.github.com'
+            git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
         - name: Get branches
           run: git branch -a
         - name: Switch branch
@@ -34,9 +37,9 @@ jobs:
           run: npm run build
         - name: Change dist directory name
           run: mv dist my_html
-        - name: Commit & Push changes
-          uses: actions-js/push@master
-          with:
-              github_token: ${{ secrets.GITHUB_TOKEN }}
-              message: Built to html ${{ github.sha }} 
-              branch: release
+        - name: Commit changes
+          run: |
+            git add -A
+            git commit -m "Built to html ${{ github.sha }}"
+        - name: Push changes
+          run: git push
