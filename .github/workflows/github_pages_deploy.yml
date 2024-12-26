@@ -66,6 +66,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - name: Switch branch
+        run: git switch release
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
