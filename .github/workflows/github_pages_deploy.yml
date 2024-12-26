@@ -33,6 +33,8 @@ jobs:
           run: git switch release
         - name: Build html
           run: npm run build
+        - name: Change dist directory name
+          run: mv dist my_html
         - name: Commit changes
           run: |
             git add -A
