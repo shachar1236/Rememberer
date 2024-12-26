@@ -51,7 +51,7 @@ jobs:
         - name: Change dist directory name
           run: |
             rm -r docs
-            cp dist docs
+            cp -r dist docs
         - name: Commit changes
           run: |
             git add -A
