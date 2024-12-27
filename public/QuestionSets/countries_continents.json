@@ -1,0 +1,100 @@
+{
+    "name": "Countries continents",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Museumsinsel_Berlin_Juli_2021_1_%28cropped%29_b.jpg/1920px-Museumsinsel_Berlin_Juli_2021_1_%28cropped%29_b.jpg",
+    "config": {
+        "learning_rate": 2.0,
+        "music": true
+    },
+    "questions": [
+        {
+            "id": 0,
+            "question": "What continent is Canada located in?",
+            "answer": "North America",
+            "wrong_answers": ["Europe", "Asia", "Africa"]
+        },
+        {
+            "id": 1,
+            "question": "What continent is Brazil located in?",
+            "answer": "South America",
+            "wrong_answers": ["North America", "Africa", "Asia"]
+        },
+        {
+            "id": 2,
+            "question": "What continent is Germany located in?",
+            "answer": "Europe",
+            "wrong_answers": ["Asia", "Africa", "South America"]
+        },
+        {
+            "id": 3,
+            "question": "What continent is Australia located in?",
+            "answer": "Australia",
+            "wrong_answers": ["Asia", "Africa", "Europe"]
+        },
+        {
+            "id": 4,
+            "question": "What continent is Egypt located in?",
+            "answer": "Africa",
+            "wrong_answers": ["Asia", "Europe", "South America"]
+        },
+        {
+            "id": 5,
+            "question": "What continent is China located in?",
+            "answer": "Asia",
+            "wrong_answers": ["Europe", "Africa", "North America"]
+        },
+        {
+            "id": 6,
+            "question": "What continent is Argentina located in?",
+            "answer": "South America",
+            "wrong_answers": ["Africa", "North America", "Europe"]
+        },
+        {
+            "id": 7,
+            "question": "What continent is India located in?",
+            "answer": "Asia",
+            "wrong_answers": ["Europe", "Africa", "Australia"]
+        },
+        {
+            "id": 8,
+            "question": "What continent is Nigeria located in?",
+            "answer": "Africa",
+            "wrong_answers": ["Asia", "Europe", "North America"]
+        },
+        {
+            "id": 9,
+            "question": "What continent is Italy located in?",
+            "answer": "Europe",
+            "wrong_answers": ["Asia", "Africa", "Australia"]
+        },
+        {
+            "id": 10,
+            "question": "What continent is Russia located in?",
+            "answer": "Europe and Asia",
+            "wrong_answers": ["North America", "Africa", "South America"]
+        },
+        {
+            "id": 11,
+            "question": "What continent is Japan located in?",
+            "answer": "Asia",
+            "wrong_answers": ["Europe", "Australia", "North America"]
+        },
+        {
+            "id": 12,
+            "question": "What continent is South Africa located in?",
+            "answer": "Africa",
+            "wrong_answers": ["Asia", "South America", "Europe"]
+        },
+        {
+            "id": 13,
+            "question": "What continent is Mexico located in?",
+            "answer": "North America",
+            "wrong_answers": ["South America", "Europe", "Asia"]
+        },
+        {
+            "id": 14,
+            "question": "What continent is Saudi Arabia located in?",
+            "answer": "Asia",
+            "wrong_answers": ["Africa", "Europe", "Australia"]
+        }
+    ]
+}
