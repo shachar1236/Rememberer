@@ -19,6 +19,7 @@
   "dependencies": {
     "audio5js": "^0.1.1",
     "buzz": "^1.2.1",
+    "firebase": "^11.1.0",
     "howler": "^2.2.4",
     "p5": "^1.11.2",
     "p5-svelte": "^3.1.2",
