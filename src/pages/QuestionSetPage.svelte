@@ -6,6 +6,9 @@
     import { max_score, Question } from "../helpers/question";
     import buzz from "buzz";
     import { Howl } from "howler";
+    import { firebase_app, user } from "../shared/shared";
+    import { addDoc, collection, doc, getDocs, getFirestore, query, setDoc, where } from "firebase/firestore";
+
     export let question_set;
 
     const QUESTIONS_NUMBER = 4;
@@ -25,10 +28,6 @@
     question_set.questions = shuffle(JSON.parse(JSON.stringify(question_set.questions)));
 
     let pool = new QuestionPool();
-
-    for (let i = 0; i < FIRST_QUESTIONS_NUM; i++) {
-        pool.AddToPool(question_set.questions.pop());
-    }
 
     let current_question;
     let current_answers = [];
@@ -115,6 +114,60 @@
         song.play();
     }
 
+    // Initialize Cloud Firestore and get a reference to the service
+    const db = getFirestore($firebase_app);
+
+    async function updateDB() {
+        if ($user) {
+            for (const question of pool.questions) {
+                try {
+                    const docRef = await setDoc(doc(db, "game_scores", $user.uid.toString(), question_set.name, question.id.toString()), {
+                        score: question.score
+                    });
+    
+                    console.log("Document written with ID: ", question.id);
+                } catch (e) {
+                    console.error("Error adding document: ", e);
+                }
+            }
+        }
+    }
+
+    async function getQuestionsScore(): Promise<void> {
+        if ($user) {
+            const q_doc = collection(db, "game_scores", $user.uid.toString(), question_set.name);
+            const q = query(q_doc, where("score", ">", 0));
+            const result = await getDocs(q);
+
+            result.forEach((doc) => {
+                console.log(`doc data =>`, doc.data());
+
+                let index = question_set.questions.findIndex((q) => q.id == doc.id);
+                if (index >= 0) {
+                    let question = question_set.questions[index];
+                    question_set.questions.splice(index, 1);
+                    let pool_q = pool.AddToPool(question);
+                    pool_q.score = doc.data().score;
+                }
+
+            });
+
+            console.log("Pool: ", pool);
+            
+        }
+    }
+
+    let questions_are_ready = false;
+
+    getQuestionsScore().then(() => {
+        if (pool.questions.length < FIRST_QUESTIONS_NUM) {
+            for (let i = 0; i < FIRST_QUESTIONS_NUM - pool.questions.length; i++) {
+                pool.AddToPool(question_set.questions.pop());
+            }
+        }
+        questions_are_ready = true;
+    })
+
     const sketch = (p5: p5) => {
 
             let choosen_answer = null;
@@ -186,6 +239,8 @@
             }
 
             let setupNextRound = () => {
+                updateDB();
+                
                 setNewQuestion();
                 current_question_pos = {
                     x: middleX,
@@ -257,7 +312,9 @@
     console.log("Here")
 </script>
 
-<P5 {sketch} debug />
+{#if  questions_are_ready}
+    <P5 {sketch} />
+{/if}
 
 <style>
 </style>

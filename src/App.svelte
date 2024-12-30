@@ -3,6 +3,8 @@
     import MainPage from "./pages/MainPage.svelte";
     import QuestionSetPage from "./pages/QuestionSetPage.svelte";
 
+    import { user, page, firebase_app, firebase_analytics } from "./shared/shared";
+
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "firebase/app";
     import { getAnalytics } from "firebase/analytics";
@@ -23,8 +25,8 @@
     };
 
     // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
+    $firebase_app = initializeApp(firebaseConfig);
+    $firebase_analytics = getAnalytics($firebase_app);
 
     let QuestionSets = [];
 
@@ -43,21 +45,33 @@
         })
     })
 
-
-
-    let currentPage = "main";
     let current_question_set;
 
     function OnQuestionSetClick(question_set) {
         console.log("clicked");
         current_question_set = JSON.parse(JSON.stringify(question_set));
-        currentPage = "question_set";
+        $page = "question_set";
     }
+    
+    const auth = getAuth();
+
+    auth.onAuthStateChanged((user_) => {
+        if (user_) {
+            // User is signed in, see docs for a list of available properties
+            // https://firebase.google.com/docs/reference/js/firebase.User
+            $user = user_;
+            // ...
+            // 👈 This is where you can also query the database as the user for the first time
+        } else {
+            // User is signed out
+            // ...
+        }
+    });
+
 
     function SignIn() {
         const provider = new GoogleAuthProvider();
 
-        const auth = getAuth();
         auth.useDeviceLanguage();
 
         signInWithPopup(auth, provider)
@@ -66,12 +80,12 @@
                 const credential = GoogleAuthProvider.credentialFromResult(result);
                 const token = credential.accessToken;
                 // The signed-in user info.
-                user = result.user;
+                $user = result.user;
                 // IdP data available using getAdditionalUserInfo(result)
                 // ...
                 console.log("success sign in");
             }).catch((error) => {
-                user = null;
+                $user = null;
                 // Handle Errors here.
                 const errorCode = error.code;
                 const errorMessage = error.message;
@@ -85,20 +99,21 @@
             });
     }
 
-    let user = null;
+    console.log($user)
+
 </script>
 
 <main>
-    {#if currentPage == "main"}
+    {#if $page == "main"}
         <MainPage {QuestionSets} {OnQuestionSetClick}></MainPage>
         <div class="w-[100vw] flex justify-center">
             <div>
-                {#if !user}
+                {#if !$user}
                     <button type="button" onclick="{SignIn}" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Sign in with google</button>
                 {/if}
             </div>
         </div>
-    {:else if currentPage == "question_set"}
+    {:else if $page == "question_set"}
         <QuestionSetPage question_set={current_question_set}></QuestionSetPage>
     {/if}
 </main>
