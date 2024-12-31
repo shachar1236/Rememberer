@@ -6,7 +6,7 @@
     import { max_score, Question } from "../helpers/question";
     import buzz from "buzz";
     import { Howl } from "howler";
-    import { firebase_app, user } from "../shared/shared";
+    import { firebase_app, isOnMobile, page, user } from "../shared/shared";
     import { addDoc, collection, doc, getDocs, getFirestore, query, setDoc, where } from "firebase/firestore";
 
     export let question_set;
@@ -14,15 +14,31 @@
     const QUESTIONS_NUMBER = 4;
     const MOV_RATE = 0.03;
     const RAND_RATE = 0.1;
-    const ANSWER_TEXT_SIZE = 50;
-    const QUESTION_TEXT_SIZE = 20;
-    const BOX_SIZE = 150;
     const ANSWER_IMAGE_WINDOWS_RATIO = 0.4;
     const ANSWER_IMAGE_SPEED = 15;
     const ANSWER_IMAGE_TIME = 0.8;
     const WRONG_ANSWER_FLICKERING_TIME = 1000; // millis
 
+    let answer_text_size = 50;
+    let question_text_size = 20;
+    let box_size = 150;
+
+    if ($isOnMobile) {
+        answer_text_size *= 0.6;
+        question_text_size *= 0.6;
+        box_size *= 0.6;
+    }
+    
+    const ANSWER_TEXT_SIZE = answer_text_size;
+    const QUESTION_TEXT_SIZE = question_text_size;
+    const BOX_SIZE = box_size;
+
     const FIRST_QUESTIONS_NUM = 5;
+
+    function returnToMainPage() {
+        $page = "main";
+    } 
+
     let answersSCREENXY = [];
 
     question_set.questions = shuffle(JSON.parse(JSON.stringify(question_set.questions)));
@@ -312,9 +328,18 @@
     console.log("Here")
 </script>
 
+<button onclick="{returnToMainPage}" type="button" class="absolute left-[47.5%] top-1 bg-transparent rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+    <!-- Heroicon name: outline/x -->
+    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+</button>
 {#if  questions_are_ready}
     <P5 {sketch} />
 {/if}
 
 <style>
+    :root {
+        background-color: #2E282A;
+    }
 </style>
