@@ -29,7 +29,7 @@
     <div>
         <h1 class="font-medium text-3xl">Welcome to Remeberer</h1>
         <h3 class="m-5 text-l">Use can use this website to make your brain remeberer things</h3>
-        <div class="flex m-8">
+        <div class="flex m-8 flex-col md:flex-row">
             {#each QuestionSets as q_set}
                 {#await getProgress(q_set) then p}
                     <QuestionSetCrad question_set={q_set} progress_bar={p} onclickfunc={() => OnQuestionSetClick(q_set)}></QuestionSetCrad>
