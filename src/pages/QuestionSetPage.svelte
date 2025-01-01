@@ -35,28 +35,7 @@
 
     const FIRST_QUESTIONS_NUM = 5;
 
-
-    var sound_correct = new Howl({
-        src: ['./assets/sounds/correct_v2.mp3'],
-        volume: 0.5,
-    });
-    var sound_wrong = new Howl({
-        src: ['./assets/sounds/wrong_v2.mp3'],
-        volume: 0.5,
-    });
-
-    if (question_set.config.music) {
-        var song = new Howl({
-            src: ['./assets/sounds/song.wav'],
-            loop: true,
-            volume: 0.1,
-        });
-    
-        song.play();
-    }
-
     function returnToMainPage() {
-        song.stop();
         $page = "main";
     } 
 
@@ -131,6 +110,25 @@
 
     let middleX, middleY;
 
+    var sound_correct = new Howl({
+        src: ['./assets/sounds/correct_v2.mp3'],
+        volume: 0.5,
+    });
+    var sound_wrong = new Howl({
+        src: ['./assets/sounds/wrong_v2.mp3'],
+        volume: 0.5,
+    });
+
+    if (question_set.config.music) {
+        var song = new Howl({
+            src: ['./assets/sounds/song.wav'],
+            loop: true,
+            autoplay: true,
+            volume: 0.1,
+        });
+    
+        song.play();
+    }
 
     // Initialize Cloud Firestore and get a reference to the service
     const db = getFirestore($firebase_app);
@@ -185,7 +183,6 @@
         }
         questions_are_ready = true;
     })
-
 
     const sketch = (p5: p5) => {
 

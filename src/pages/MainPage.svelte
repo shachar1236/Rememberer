@@ -3,54 +3,9 @@
     import { collection, getAggregateFromServer, getDocs, getFirestore, query, sum, where } from "firebase/firestore";
     import { firebase_app, user } from "../shared/shared";
     import { max_score } from "../helpers/question";
-    import * as googleTTS from '@sefinek/google-tts-api'; // ES6 or TypeScript
-    import { Howl } from "howler";
-
-
 
     export let QuestionSets;
     export let OnQuestionSetClick;
-
-    async function speak() {
-        // const url = googleTTS.getAudioUrl('Hello world!', {
-        //     lang: 'en',
-        //     slow: false,
-        //     host: 'https://translate.google.com',
-        // });
-
-        // const audio = new Audio(url);
-        // audio.play();
-
-        // const response = await fetch(url, { mode: 'no-cors'});
-
-        // if (!response.ok) {
-        //     throw new Error(`Failed to fetch audio: ${response.statusText}`);
-        // }
-
-        // // Convert response to Blob
-        // const audioBlob = await response.blob();
-
-        // // Create a Blob URL
-        // const blobUrl = URL.createObjectURL(audioBlob);
-
-        // // Get audio URL
-        // console.log(url); // https://translate.google.com/translate_tts?...
-        // var song = new Howl({
-        //     src: [url],
-        //     html5: true,
-        //     volume: 1.0,
-        // });
-    
-        // song.play();
-
-        const message = "Hello world!";
-        const utterance = new SpeechSynthesisUtterance(message);
-
-        window.speechSynthesis.cancel();
-        window.speechSynthesis.speak(utterance);
-
-    }
-
 
 
     // Initialize Cloud Firestore and get a reference to the service
@@ -83,8 +38,5 @@
         </div>
     </div>
 </div>
-<button onclick="{speak}">
-    hiiii
-</button>
 
 <style></style>
