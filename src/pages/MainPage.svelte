@@ -10,6 +10,7 @@
     function speak() {
         var msg = new SpeechSynthesisUtterance();
         msg.text = "Hello World";
+        msg.rate = 2;
         window.speechSynthesis.cancel();
         window.speechSynthesis.speak(msg);
     }
