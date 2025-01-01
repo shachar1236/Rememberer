@@ -17,6 +17,7 @@
     "vite": "^6.0.5"
   },
   "dependencies": {
+    "@sefinek/google-tts-api": "^2.1.8",
     "audio5js": "^0.1.1",
     "buzz": "^1.2.1",
     "firebase": "^11.1.0",
