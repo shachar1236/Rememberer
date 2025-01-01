@@ -7,6 +7,13 @@
     export let QuestionSets;
     export let OnQuestionSetClick;
 
+    function speak() {
+        var msg = new SpeechSynthesisUtterance();
+        msg.text = "Hello World";
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(msg);
+    }
+
 
     // Initialize Cloud Firestore and get a reference to the service
     const db = getFirestore($firebase_app);
@@ -38,5 +45,7 @@
         </div>
     </div>
 </div>
+
+<button onclick="{speak}">hiiiiii</button>
 
 <style></style>
