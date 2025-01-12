@@ -9,9 +9,15 @@
     import { firebase_app, isOnMobile, page, user } from "../shared/shared";
     import { addDoc, collection, doc, getDocs, getFirestore, query, setDoc, where } from "firebase/firestore";
 
+    var song = new Howl({
+        src: ['./assets/sounds/song.wav'],
+        loop: true,
+        volume: 0.1,
+    });
+
     export let question_set;
 
-    const QUESTIONS_NUMBER = 4;
+    const MAX_QUESTIONS_NUMBER = 4;
     const MOV_RATE = 0.03;
     const RAND_RATE = 0.1;
     const ANSWER_IMAGE_WINDOWS_RATIO = 0.4;
@@ -36,6 +42,7 @@
     const FIRST_QUESTIONS_NUM = 5;
 
     function returnToMainPage() {
+        song.stop();
         $page = "main";
     } 
 
@@ -52,6 +59,26 @@
         x: 0,
         y: 0,
     };
+
+    function enforceRTL(text) {
+    // Unicode ranges for Hebrew, Arabic, and other RTL scripts
+    const rtlRegex = /[\u0590-\u08FF]/;
+    
+    // Check if the text contains any RTL characters
+    if (rtlRegex.test(text)) {
+        // Ensure that symbols at the start or end don't interfere with RTL flow
+        // Add \u200F at the beginning and at the end for proper positioning
+        text = `\u200F${text}`; // Add RLM at the start
+        
+        // Handle symbol at the end of the text (keep it at the rightmost)
+        if (/[^\w\u0590-\u08FF]$/.test(text)) {
+        text = `${text}\u200F`; // Add RLM at the end
+        }
+    }
+
+    // Return the modified or original text
+    return text;
+    }
 
     function setNewQuestion() {
         let avg = pool.GetAverageScore();
@@ -80,7 +107,7 @@
             target_x: 0,
         })
         current_question.wrong_answers.forEach(answer => {
-            if (current_answers.length < QUESTIONS_NUMBER) {
+            if (current_answers.length < MAX_QUESTIONS_NUMBER) {
                 current_answers.push({
                     answer: answer,
                     x: 0,
@@ -98,7 +125,10 @@
     }
 
     function setCurrentAnswersXY() {
-        for (let i = 0; i < QUESTIONS_NUMBER; i++) {
+        if (current_answers.length > MAX_QUESTIONS_NUMBER || current_answers.length < 2) {
+            alert("Answers length is not good")
+        } 
+        for (let i = 0; i < current_answers.length; i++) {
             let x = answersSCREENXY[i].x;
             let y = answersSCREENXY[i].y;
             current_answers[i].target_x = x;
@@ -120,12 +150,7 @@
     });
 
     if (question_set.config.music) {
-        var song = new Howl({
-            src: ['./assets/sounds/song.wav'],
-            loop: true,
-            autoplay: true,
-            volume: 0.1,
-        });
+
     
         song.play();
     }
@@ -197,7 +222,7 @@
             let answer_image_timer = 0;
 
             let processAnswers = () => {
-                for (let i = 0; i < QUESTIONS_NUMBER; i++) {
+                for (let i = 0; i < current_answers.length; i++) {
                     let x_diff = current_answers[i].target_x - current_answers[i].x;
                     let y_diff = current_answers[i].target_y - current_answers[i].y;
                     if (!choosen_answer) {
@@ -231,7 +256,8 @@
                     } else {
                         p5.fill(118, 176, 65);
                     }
-                    p5.text(current_answers[i].answer, current_answers[i].x, current_answers[i].y)
+                    let txt = enforceRTL(current_answers[i].answer);
+                    p5.text(txt, current_answers[i].x, current_answers[i].y)
 
 
                     let curr_ans = current_answers[i];
@@ -281,8 +307,8 @@
                 for (let i = -1; i < 2; i += 2) {
                     for (let j = -1; j < 2; j += 2) {
                         answersSCREENXY.push({
-                            x: p5.windowWidth * (0.5 + 0.25 * i),
-                            y: p5.windowHeight * (0.5 + 0.25 * j),
+                            x: p5.windowWidth * (0.5 + 0.25 * j),
+                            y: p5.windowHeight * (0.5 + 0.25 * i),
                         })
                     }
                 }
@@ -309,10 +335,13 @@
                     }
                 } 
                 processAnswers();
+
+                let txt = enforceRTL(current_question.question);
                 p5.textSize(QUESTION_TEXT_SIZE);
                 p5.fill(255, 201, 20);
                 p5.textAlign(p5.CENTER);
-                p5.text(current_question.question, current_question_pos.x, current_question_pos.y)
+                p5.textFont()
+                p5.text(txt, current_question_pos.x, current_question_pos.y)
 
             }
 
