@@ -1,0 +1,190 @@
+{
+    "name": "אם או עם",
+    "image": "https://images.twinkl.co.uk/tw1n/image/private/t_630/u/ux/question-mark_ver_1.jpg",
+    "config": {
+        "learning_rate": 3.0,
+        "music": true
+    },
+    "questions": [
+        {
+            "id": 0,
+            "question": "האם אתה רוצה ללכת _ חברים לסרט?",
+            "answer": "עם",
+            "wrong_answers": ["אם"]
+        },
+        {
+            "id": 1,
+            "question": "_ תסיים את השיעורים, תוכל לצאת לשחק בחוץ.",
+            "answer": "אם",
+            "wrong_answers": ["עם"]
+        },
+        {
+            "id": 2,
+            "question": "אני תמיד שמח לדבר _ אנשים מעניינים.",
+            "answer": "עם",
+            "wrong_answers": ["אם"]
+        },
+        {
+            "id": 3,
+            "question": "_ תאכל את כל הירקות שלך, תקבל קינוח.",
+            "answer": "אם",
+            "wrong_answers": ["עם"]
+        },
+        {
+            "id": 4,
+            "question": "הילד שיחק _ כדור בגן הציבורי.",
+            "answer": "עם",
+            "wrong_answers": ["אם"]
+        },
+        {
+            "id": 5,
+            "question": "_ תרצה לבוא איתי לטיול, תודיע לי מראש.",
+            "answer": "אם",
+            "wrong_answers": ["עם"]
+        },
+        {
+            "id": 6,
+            "question": "הוא יצא לטיול _ משפחתו בשבת שעברה.",
+            "answer": "עם",
+            "wrong_answers": ["אם"]
+        },
+        {
+            "id": 7,
+            "question": "_ לא תלמד למבחן, תתקשה לעבור אותו.",
+            "answer": "אם",
+            "wrong_answers": ["עם"]
+        },
+        {
+            "id": 8,
+            "question": "אני אוהב לאכול פסטה _ גבינה.",
+            "answer": "עם",
+            "wrong_answers": ["אם"]
+        },
+        {
+            "id": 9,
+            "question": "_ תתקשר מחר, אדבר איתך על הנושא.",
+            "answer": "אם",
+            "wrong_answers": ["עם"]
+        },
+        {
+            "id": 10,
+            "question": "הוא תמיד יוצא _ החברים שלו ביום שישי בערב.",
+            "answer": "עם",
+            "wrong_answers": ["אם"]
+        },
+        {
+            "id": 11,
+            "question": "_ תשתדל יותר, תצליח בעבודה שלך.",
+            "answer": "אם",
+            "wrong_answers": ["עם"]
+        },
+        {
+            "id": 12,
+            "question": "הוא שוחח _ המורה שלו על ההתקדמות בלימודים.",
+            "answer": "עם",
+            "wrong_answers": ["אם"]
+        },
+        {
+            "id": 13,
+            "question": "_ תסיים בזמן, נוכל ללכת יחד למסיבה.",
+            "answer": "אם",
+            "wrong_answers": ["עם"]
+        },
+        {
+            "id": 14,
+            "question": "אני נהנה לדבר _ אנשים בעלי תחומי עניין דומים.",
+            "answer": "עם",
+            "wrong_answers": ["אם"]
+        },
+        {
+            "id": 15,
+            "question": "_ תלמד כל יום, תשפר את הציונים שלך.",
+            "answer": "אם",
+            "wrong_answers": ["עם"]
+        },
+        {
+            "id": 16,
+            "question": "אנחנו נוסעים לטיול _ המשפחה בחופשה הקרובה.",
+            "answer": "עם",
+            "wrong_answers": ["אם"]
+        },
+        {
+            "id": 17,
+            "question": "_ תגיע בזמן, לא נפספס את הרכבת.",
+            "answer": "אם",
+            "wrong_answers": ["עם"]
+        },
+        {
+            "id": 18,
+            "question": "אני נהנה לשחק _ החברים שלי בכל יום שישי.",
+            "answer": "עם",
+            "wrong_answers": ["אם"]
+        },
+        {
+            "id": 19,
+            "question": "_ תביא מטרייה, לא תירטב בגשם.",
+            "answer": "אם",
+            "wrong_answers": ["עם"]
+        },
+        {
+            "id": 20,
+            "question": "אני תמיד יוצא לטיול _ הכלב שלי בבוקר.",
+            "answer": "עם",
+            "wrong_answers": ["אם"]
+        },
+        {
+            "id": 21,
+            "question": "_ לא תתאמן, לא תוכל להשתפר בספורט.",
+            "answer": "אם",
+            "wrong_answers": ["עם"]
+        },
+        {
+            "id": 22,
+            "question": "הוא תמיד הולך לים _ החברים שלו.",
+            "answer": "עם",
+            "wrong_answers": ["אם"]
+        },
+        {
+            "id": 23,
+            "question": "_ תשמור על הכללים, תוכל להצליח במשימה.",
+            "answer": "אם",
+            "wrong_answers": ["עם"]
+        },
+        {
+            "id": 24,
+            "question": "אני אוהב לשתות קפה _ חלב בבוקר.",
+            "answer": "עם",
+            "wrong_answers": ["אם"]
+        },
+        {
+            "id": 25,
+            "question": "_ תשתמש בשיטה הזו, תוכל לפתור את הבעיה.",
+            "answer": "אם",
+            "wrong_answers": ["עם"]
+        },
+        {
+            "id": 26,
+            "question": "אני תמיד מדבר _ השכנים שלי כשאני רואה אותם.",
+            "answer": "עם",
+            "wrong_answers": ["אם"]
+        },
+        {
+            "id": 27,
+            "question": "_ תאכל אוכל בריא, תרגיש טוב יותר.",
+            "answer": "אם",
+            "wrong_answers": ["עם"]
+        },
+        {
+            "id": 28,
+            "question": "הוא נסע _ הוריו לביקור אצל קרובי משפחה.",
+            "answer": "עם",
+            "wrong_answers": ["אם"]
+        },
+        {
+            "id": 29,
+            "question": "_ תעשה מאמץ, תוכל להשיג את המטרות שלך.",
+            "answer": "אם",
+            "wrong_answers": ["עם"]
+        }
+    ]
+}
