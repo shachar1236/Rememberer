@@ -7,42 +7,6 @@
     export let QuestionSets;
     export let OnQuestionSetClick;
 
-    async function speak() {
-        const url = googleTTS.getAudioUrl('Hello world!', {
-            lang: 'en',
-            slow: false,
-            host: 'https://translate.google.com',
-        });
-
-        console.log(url);
-
-        const audio = new Audio(url);
-        audio.play();
-
-        // const response = await fetch(url, { mode: 'no-cors'});
-
-        // if (!response.ok) {
-        //     throw new Error(`Failed to fetch audio: ${response.statusText}`);
-        // }
-
-        // // Convert response to Blob
-        // const audioBlob = await response.blob();
-
-        // // Create a Blob URL
-        // const blobUrl = URL.createObjectURL(audioBlob);
-
-        // // Get audio URL
-        // console.log(url); // https://translate.google.com/translate_tts?...
-        // var song = new Howl({
-        //     src: [url],
-        //     html5: true,
-        //     volume: 1.0,
-        // });
-    
-        // song.play();
-    }
-
-
     // Initialize Cloud Firestore and get a reference to the service
     const db = getFirestore($firebase_app);
 
