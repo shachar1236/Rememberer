@@ -9,6 +9,12 @@
     import { firebase_app, isOnMobile, page, user } from "../shared/shared";
     import { addDoc, collection, doc, getDocs, getFirestore, query, setDoc, where } from "firebase/firestore";
 
+    var song = new Howl({
+        src: ['./assets/sounds/song.wav'],
+        loop: true,
+        volume: 0.1,
+    });
+
     export let question_set;
 
     const QUESTIONS_NUMBER = 4;
@@ -36,6 +42,7 @@
     const FIRST_QUESTIONS_NUM = 5;
 
     function returnToMainPage() {
+        song.stop();
         $page = "main";
     } 
 
@@ -120,12 +127,7 @@
     });
 
     if (question_set.config.music) {
-        var song = new Howl({
-            src: ['./assets/sounds/song.wav'],
-            loop: true,
-            autoplay: true,
-            volume: 0.1,
-        });
+
     
         song.play();
     }
