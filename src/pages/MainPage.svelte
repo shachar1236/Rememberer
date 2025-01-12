@@ -3,7 +3,6 @@
     import { collection, getAggregateFromServer, getDocs, getFirestore, query, sum, where } from "firebase/firestore";
     import { firebase_app, user } from "../shared/shared";
     import { max_score } from "../helpers/question";
-    import * as googleTTS from '@sefinek/google-tts-api'; // ES6 or TypeScript
 
     export let QuestionSets;
     export let OnQuestionSetClick;
